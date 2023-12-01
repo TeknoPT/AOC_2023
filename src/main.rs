@@ -1,6 +1,5 @@
 use std::fs::File;
-use std::io::{self, Read, ErrorKind};
-use std::ops::Index;
+use std::io::{Read, ErrorKind};
 
 const NUMBERS: [&str; 9] = [ "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
@@ -81,19 +80,26 @@ fn part_two(){
                         }
 
                         last_char = word.to_digit(10).unwrap() as i32;
-                        last_char_pos = line.find(word).unwrap() as i32;
+                        last_char_pos = line.rfind(word).unwrap() as i32;
                     }
                 }
+
                 for number in NUMBERS {
                     if line.contains(number) {
-                        if ( line.find(number).unwrap() as i32 ) < first_char_pos {
+                        if ( line.find(number).unwrap() as i32 ) < first_char_pos || ( first_char_pos == -1  && (line.find(number).unwrap() as i32 ) != -1 ) {
                             first_char = NUMBERS.iter().position(|&s| s == number).unwrap()  as i32 + 1;
+                            first_char_pos = line.find(number).unwrap() as i32;
                         }
 
-                        if ( line.find(number).unwrap() as i32 ) > last_char_pos {
+                        if ( line.rfind(number).unwrap() as i32 ) > last_char_pos || ( last_char_pos == -1  && (line.rfind(number).unwrap() as i32 ) != -1 ){
                             last_char = NUMBERS.iter().position(|&s| s == number).unwrap() as i32 + 1;
+                            last_char_pos = line.rfind(number).unwrap() as i32;
                         }
                     }
+                }
+
+                if last_char == -1 {
+                    last_char = first_char;
                 }
 
                 total_line = first_char * 10 + last_char;
