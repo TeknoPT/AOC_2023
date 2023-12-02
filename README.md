@@ -1,6 +1,6 @@
 # Advent of Code 2023 Solutions in Rust
 
-This repository contains my solutions for the Advent of Code 2023 challenges, implemented exclusively in the Rust programming language.
+This repository is dedicated to my solutions for the Advent of Code 2023 challenges. The primary focus of this project is to explore and deepen my understanding of Rust development.
 
 ## Index
 
