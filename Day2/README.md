@@ -1,6 +1,3 @@
-Sure, here's a `README.md` file for Day 2 of your Advent of Code 2023 challenge in Rust:
-
-````markdown
 # Day 2: Cube Conundrum
 
 ## Overview
@@ -69,7 +66,6 @@ Navigate to the Day 2 directory and run the solution:
 cd Day2
 cargo run --release
 ```
-````
 
 This will execute the Rust program for Day 2 using the provided input file.
 
@@ -80,8 +76,3 @@ Completing these puzzles earned two gold stars and provided a unique challenge i
 ---
 
 Return to the [main README](../README.md) for an overview of all days.
-
-```
-
-This README gives a detailed overview of Day 2's challenges, including the task, examples, and solutions for each part. It also includes instructions on how to run the code and a link to the input file. Remember to update the link if your file structure or naming convention differs.
-```
