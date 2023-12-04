@@ -43,7 +43,6 @@ fn get_symbol_positions(data: String) -> Vec<Item> {
                 // Number Check
             if  item_value >= 48 && item_value <= 57 || item_value == 46 {
                 x += 1;
-                println!("Number: {} - {}", c, item_value);
                 continue;
             }
 
@@ -128,7 +127,7 @@ fn check_data(symbol_found: Vec<Item>, numbers_found: Vec<Item>)
         }
     }
 
-    println!("Count: {}", count);
+    println!("Part 1: {}", count);
 }
 
 fn check_adjacent_symbol(symbol_found : Vec<Item>, number: String, x_number: i32, y_number: i32) -> bool{
@@ -145,11 +144,56 @@ fn check_adjacent_symbol(symbol_found : Vec<Item>, number: String, x_number: i32
     return false;
 }
 
+fn check_adjacent_numbers(numbers_found : Vec<Item>, symbol: String, x_symbol: i32, y_symbol: i32) -> i32 {
+    let mut count:i32 = 1;
+    let mut symbol_found_num = 0;
+    for number in numbers_found {
+        if number.y + 1 >= y_symbol && number.y - 1 <= y_symbol {
+            if x_symbol >= number.x - 1 && x_symbol <= number.x + number.symbol.len() as i32 {
+                //println!("{} -- y:{} || x:{} || len: {}", number.symbol, number.y, number.x, number.x + number.symbol.len() as i32);
+
+                symbol_found_num += 1;
+                //println!("num:{} x {} = {}", number.symbol, count, number.symbol.parse::<i32>().unwrap() as i32 * count);
+                count *= number.symbol.parse::<i32>().unwrap() as i32;
+            }
+            /*if (number.x <= x_symbol - 1) && (number.x + number.symbol.len() as i32 <= x_symbol)  ||
+                (number.x >=  x_symbol + 1) && (number.x + number.symbol.len() as i32 >= x_symbol) {
+                symbol_found_num += 1;
+                println!("num:{} x {} = {}", number.symbol, count, number.symbol.parse::<i32>().unwrap() as i32 * count);
+                count *= number.symbol.parse::<i32>().unwrap() as i32;
+            }*/
+        }
+    }
+
+    if symbol_found_num != 2 {
+       return 0;
+    }
+    
+    return count;
+}
+
+fn part_2(symbol_found: Vec<Item>, numbers_found: Vec<Item>)
+{
+    let mut count:i32 = 0;
+    for symbol in symbol_found{
+        if symbol.symbol != "*" {
+            continue;
+        }
+
+        //println!("y:{}|x:{}={}", symbol.y, symbol.x, symbol.symbol);
+        let numbers_found_copy = numbers_found.clone();
+        count += check_adjacent_numbers(numbers_found_copy, symbol.symbol.clone(), symbol.x,symbol.y);
+
+    }
+
+    println!("Part 2: {}", count);
+}
+
 
 fn main() {
     let contents = read_file_to_string();
     let parsed_data = get_number_positions(contents.clone());
     let data = get_symbol_positions(contents.clone());
-    check_data(data, parsed_data);
-
+    check_data(data.clone(), parsed_data.clone());
+    part_2(data, parsed_data);
 }
